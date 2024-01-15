@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 def my_sin(x):
     return math.sin(x)
 
+def my_func2(x):
+    return 1/(1 + 25*x**2)
 
 
 
@@ -19,27 +21,43 @@ step = (stop - start + 1)/nPoints;
 x = np.arange(start, stop + 1, step) 
 # Array de las imágenes de la función (f(x) = sin(x))
 my_sin_vec = np.vectorize(my_sin)
-f = my_sin_vec(x)
+my_func2_vec = np.vectorize(my_func2)
+#f = my_sin_vec(x)
+f = my_func2_vec(x)
+
 
 
 plt.plot(x, f)
 
 
-import numpy.polynomial.chebyshev as cheb
 
-raices = cheb.chebroots(f)
-
+# Con nodos equispaciados
 from scipy.interpolate import barycentric_interpolate
-
-
-
-
-
 
 x1 = np.linspace(min(x), max(x), num=100)
 
 y = barycentric_interpolate(x, f, x1)
+y_ref = my_sin_vec(x1)
+y_ref = my_func2_vec(x1)
 plt.plot(x, f, "o", label="observation")
 plt.plot(x1, y, label="barycentric interpolation")
+plt.plot(x1, y_ref, label="my_func2")
+plt.legend()
+plt.show()
+
+
+# Con nodos de Chebyshev
+import numpy.polynomial.chebyshev as cheb
+
+coeffs_cheb = [0]*11 + [1]
+T11 = cheb.Chebyshev(coeffs_cheb, [-5, 5])
+xp_ch = T11.roots()
+#raices = cheb.chebroots(f)
+y = barycentric_interpolate(xp_ch, f, x1)
+#y_ref = my_sin_vec(x1)
+y_ref = my_func2_vec(x1)
+plt.plot(xp_ch, f, "o", label="observation")
+plt.plot(x1, y, label="barycentric interpolation")
+plt.plot(x1, y_ref, label="my_func2")
 plt.legend()
 plt.show()
