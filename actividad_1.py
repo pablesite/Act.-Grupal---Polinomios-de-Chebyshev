@@ -24,6 +24,15 @@ def my_func3(x):
 # Inicialización de variables
 start = -5; stop = 5; nPoints_11 = 11; nPoints_21 = 21;
 
+# Funciones originales
+x = np.linspace(start, stop, num=100)
+my_func1_vec = np.vectorize(my_func1)
+my_func2_vec = np.vectorize(my_func2)
+my_func3_vec = np.vectorize(my_func3)
+f_1 = my_func1_vec(x)
+f_2 = my_func2_vec(x)
+f_3 = my_func3_vec(x)
+
 ### Nodos equispaciados
 # Valores de la x para 11 y 21 puntos
 step_11 = (stop - start)/(nPoints_11 - 1)
@@ -32,25 +41,15 @@ steps = (step_11, step_21)
 x_eq_11 = np.arange(start, stop + steps[1], steps[0]) 
 x_eq_21 = np.arange(start, stop + steps[1], steps[1]) 
 
-# Valores de las imágenes de las funciones
-my_func1_vec = np.vectorize(my_func1)
-my_func2_vec = np.vectorize(my_func2)
-my_func3_vec = np.vectorize(my_func3)
+# Valores de las imágenes (y) de las 3 funciones para 11 y 21 puntos
 y_1_eq_11 = my_func1_vec(x_eq_11)
 y_2_eq_11 = my_func2_vec(x_eq_11)
 y_3_eq_11 = my_func3_vec(x_eq_11)
-
 y_1_eq_21 = my_func1_vec(x_eq_21)
 y_2_eq_21 = my_func2_vec(x_eq_21)
 y_3_eq_21 = my_func3_vec(x_eq_21)
 
 fig, ax = plt.subplots(2, 3)
-
-x = np.linspace(start, stop, num=100)
-f_1 = my_func1_vec(x)
-f_2 = my_func2_vec(x)
-f_3 = my_func3_vec(x)
-
 ax[0, 0].plot(x_eq_11, y_1_eq_11, "o")
 ax[0, 0].plot(x, f_1)
 ax[0, 1].plot(x_eq_11, y_2_eq_11, "o")
