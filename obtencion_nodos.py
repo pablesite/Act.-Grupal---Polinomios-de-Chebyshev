@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 
 """ Obtencion de nodos (11 y 21, equispaciados y de Chebysheb)"""
 
@@ -7,7 +7,7 @@ import numpy.polynomial.chebyshev as cheb
 import matplotlib.pyplot as plt
 
 def obtencion_nodos_eq(start, stop, n_points_vec):
-    """ Funcion que obtiene los nodos equispaciados en un dominio para diferentes numero de puntos """
+    """ Funcion que obtiene los nodos equispaciados en un dominio dado para diferentes numero de puntos """
     step_vec = [0] * len(n_points_vec)
     x_eq_vec = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
     i = 0
@@ -17,8 +17,9 @@ def obtencion_nodos_eq(start, stop, n_points_vec):
         i = i + 1
     return x_eq_vec
 
+
 def obtencion_nodos_cheb(start, stop, n_points_vec):
-    """ Funcion que obtiene los nodos equispaciados en un dominio para diferentes numero de puntos """
+    """ Funcion que obtiene los nodos de Chebysehev en un dominio dado para diferentes numero de puntos """
     coeffs_cheb = [0] * len(n_points_vec)
     T_n = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
     x_cheb_vec = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
@@ -31,7 +32,7 @@ def obtencion_nodos_cheb(start, stop, n_points_vec):
     return x_cheb_vec
 
 def muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points):
-    """ Función que muestra los plots de la obtención de los nodos """
+    """ Funcion que muestra los plots de la obtencion de los nodos """
     fig, ax = plt.subplots(len(x_eq_vec), len(y_n_eq_points[0]))
     for i in range(len(x_eq_vec)):
         for j in range(len(y_n_eq_points[0])):

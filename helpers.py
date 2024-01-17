@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 """ Funciones auxiliares """
 
 import numpy as np

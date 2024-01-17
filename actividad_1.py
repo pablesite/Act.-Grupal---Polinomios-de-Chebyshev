@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ Codigo main para obtener los resultados de la Actividad 1"""
 
 import math
@@ -11,6 +10,7 @@ from obtencion_nodos import obtencion_nodos_eq, obtencion_nodos_cheb, muestra_no
 from helpers import vectorize_functions, obtain_f_n
 
 
+
 """ Definicion de las funciones originales """
 def my_func1(x):
     return math.sin(x)
@@ -21,39 +21,42 @@ def my_func2(x):
 def my_func3(x):
     return math.exp(-20*x**2)
 
-# Inicialización de variables
-start = -5; stop = 5; n_points_vec = (11, 21); # Dinámico
-# Obtención del vector x, con alto muestreo para ver la función original.
+
+# Inicializacion de variables
+start = -5
+stop = 5
+n_points_vec = (11, 21) # Dinamico
+# Obtencion del vector x, con alto muestreo para ver la funcion original.
 x = np.linspace(start, stop, num=100)
-# Obtención de las f(x) de cada una de las funciones. 
-my_functions_vec = vectorize_functions((my_func1, my_func2, my_func3)) # Dinámico
+# Obtencion de las f(x) de cada una de las funciones. 
+my_functions_vec = vectorize_functions((my_func1, my_func2, my_func3)) # Dinamico
 f_n = obtain_f_n(my_functions_vec, x)
 
 
 """ Obtencion de nodos """
 
 ### Nodos equispaciados
-# Obtención de las x (x_eq_vec) para 11 y 21 puntos
+# Obtencion de las x (x_eq_vec) para 11 y 21 puntos
 x_eq_vec = obtencion_nodos_eq(start, stop, n_points_vec)
-# Valores de las imágenes (f(x)) de las 3 funciones para 11 y 21 puntos
+# Valores de las imagenes (f(x)) de las 3 funciones para 11 y 21 puntos
 y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_eq_vec)):
     y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
-# Representación de las gráficas
+# Representacion de las graficas
 muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
 
 ### Nodos de Chebyshev
-# Obtención de las x (x_cheb_vec) para 11 y 21 puntos
+# Obtencion de las x (x_cheb_vec) para 11 y 21 puntos
 x_cheb_vec = obtencion_nodos_cheb(start, stop, n_points_vec)
-# Valores de las imágenes (f(x)) de las 3 funciones para 11 y 21 puntos
+# Valores de las imagenes (f(x)) de las 3 funciones para 11 y 21 puntos
 y_n_cheb_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_cheb_vec)):
     y_n_cheb_points[i] = obtain_f_n(my_functions_vec, x_cheb_vec[i])
-# Representación de la gráfica
+# Representacion de la grafica
 muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
 
 
-""" Algoritmos de interpolación """
+""" Algoritmos de interpolacion """
 
 # Con nodos equispaciados
 from scipy.interpolate import barycentric_interpolate
@@ -87,7 +90,7 @@ plt.show()
 from scipy.interpolate import lagrange
 
 # Lagrange Interpolation
-f = my_func2_vec(x)  # Función a utilizar
+f = my_func2_vec(x)  # Funcion a utilizar
 y_ref = my_func2_vec(x1)
 
 # Calcular el polinomio interpolante de Lagrange
@@ -105,15 +108,7 @@ plt.show()
 
 
 
-""" Cálculo de errores """
+""" Calculo de errores """
 
 
-""" Cálculo de tiempos """
-
-
-
-
-
-
-
-
+""" Calculo de tiempos """
