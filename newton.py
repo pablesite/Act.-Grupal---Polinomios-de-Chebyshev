@@ -14,7 +14,7 @@ def my_func1(x):
 # Puntos de interpolación
 start = -5
 stop = 5
-nPoints = 12
+nPoints = 4
 x_values = np.linspace(start, stop, nPoints)
 y_values = my_func2(x_values)
 
@@ -37,14 +37,15 @@ def newton_interpolation(x_values, y_values):
     return sp.simplify(polynomial)
 
 
+inicio_tiempo = time.time()
 # Construir el polinomio interpolante
 interpolation_polynomial = newton_interpolation(x_values, y_values)
 # Crear una función lambda a partir del polinomio
 interp_func = sp.lambdify('x', interpolation_polynomial, 'numpy')
 #Evaluar
 y_eval = interp_func(x1)
-
-print(time.time())
+fin_tiempo = time.time()
+print('tiempo transcurrido = ', (fin_tiempo-inicio_tiempo)/1000.0)
 
 # Imprimir el polinomio simplificado
 print("Polinomio de Interpolación Simplificado:")
@@ -58,7 +59,6 @@ plt.show()
 
 
 #Error
-
 pol = y_eval
 f=my_func2(x1)
 error = pol-f
