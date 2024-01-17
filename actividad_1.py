@@ -1,14 +1,17 @@
-""" Código main para obtener los resultados de la Actividad 1"""
+# -*- coding: utf-8 -*-
+""" Codigo main para obtener los resultados de la Actividad 1"""
 
 import math
 import time
 from scipy import linalg
-import numpy as np
 import matplotlib.pyplot as plt
 
+import numpy as np
+from obtencion_nodos import obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
+from helpers import vectorize_functions, obtain_f_n
 
-""" Definición de funciones """
 
+""" Definicion de las funciones originales """
 def my_func1(x):
     return math.sin(x)
 
@@ -18,76 +21,39 @@ def my_func2(x):
 def my_func3(x):
     return math.exp(-20*x**2)
 
-
-""" Obtención de nodos """
-
 # Inicialización de variables
-start = -5; stop = 5; nPoints_11 = 11; nPoints_21 = 21;
-
-# Funciones originales
+start = -5; stop = 5; n_points_vec = (11, 21); # Dinámico
+# Obtención del vector x, con alto muestreo para ver la función original.
 x = np.linspace(start, stop, num=100)
-my_func1_vec = np.vectorize(my_func1)
-my_func2_vec = np.vectorize(my_func2)
-my_func3_vec = np.vectorize(my_func3)
-f_1 = my_func1_vec(x)
-f_2 = my_func2_vec(x)
-f_3 = my_func3_vec(x)
+# Obtención de las f(x) de cada una de las funciones. 
+my_functions_vec = vectorize_functions((my_func1, my_func2, my_func3)) # Dinámico
+f_n = obtain_f_n(my_functions_vec, x)
+
+
+""" Obtencion de nodos """
 
 ### Nodos equispaciados
-# Valores de la x para 11 y 21 puntos
-step_11 = (stop - start)/(nPoints_11 - 1)
-step_21 = (stop - start)/(nPoints_21 - 1)
-steps = (step_11, step_21)
-x_eq_11 = np.arange(start, stop + steps[1], steps[0]) 
-x_eq_21 = np.arange(start, stop + steps[1], steps[1]) 
+# Obtención de las x (x_eq_vec) para 11 y 21 puntos
+x_eq_vec = obtencion_nodos_eq(start, stop, n_points_vec)
+# Valores de las imágenes (f(x)) de las 3 funciones para 11 y 21 puntos
+y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
+for i in range(len(x_eq_vec)):
+    y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
+# Representación de las gráficas
+muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
 
-# Valores de las imágenes (y) de las 3 funciones para 11 y 21 puntos
-y_1_eq_11 = my_func1_vec(x_eq_11)
-y_2_eq_11 = my_func2_vec(x_eq_11)
-y_3_eq_11 = my_func3_vec(x_eq_11)
-y_1_eq_21 = my_func1_vec(x_eq_21)
-y_2_eq_21 = my_func2_vec(x_eq_21)
-y_3_eq_21 = my_func3_vec(x_eq_21)
-
-fig, ax = plt.subplots(2, 3)
-ax[0, 0].plot(x_eq_11, y_1_eq_11, "o")
-ax[0, 0].plot(x, f_1)
-ax[0, 1].plot(x_eq_11, y_2_eq_11, "o")
-ax[0, 1].plot(x, f_2)
-ax[0, 2].plot(x_eq_11, y_3_eq_11, "o")
-ax[0, 2].plot(x, f_3)
-ax[1, 0].plot(x_eq_21, y_1_eq_21, "o")
-ax[1, 0].plot(x, f_1)
-ax[1, 1].plot(x_eq_21, y_2_eq_21, "o")
-ax[1, 1].plot(x, f_2)
-ax[1, 2].plot(x_eq_21, y_3_eq_21, "o")
-ax[1, 2].plot(x, f_3)
-plt.legend()
-plt.show()
-
-
-
-# Nodos de Chebyshev
-import numpy.polynomial.chebyshev as cheb
-coeffs_cheb = [0]*11 + [1]
-T11 = cheb.Chebyshev(coeffs_cheb, [-5, 5])
-xp_ch = T11.roots()
-
-#FALTA PLOT
+### Nodos de Chebyshev
+# Obtención de las x (x_cheb_vec) para 11 y 21 puntos
+x_cheb_vec = obtencion_nodos_cheb(start, stop, n_points_vec)
+# Valores de las imágenes (f(x)) de las 3 funciones para 11 y 21 puntos
+y_n_cheb_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
+for i in range(len(x_cheb_vec)):
+    y_n_cheb_points[i] = obtain_f_n(my_functions_vec, x_cheb_vec[i])
+# Representación de la gráfica
+muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
 
 
 """ Algoritmos de interpolación """
-
-
-""" Cálculo de errores """
-
-
-""" Cálculo de tiempos """
-
-
-
-
-
 
 # Con nodos equispaciados
 from scipy.interpolate import barycentric_interpolate
@@ -135,5 +101,19 @@ plt.plot(x1, y, label="Lagrange Interpolation")
 plt.plot(x1, y_ref, label="my_func2")
 plt.legend()
 plt.show()
+
+
+
+
+""" Cálculo de errores """
+
+
+""" Cálculo de tiempos """
+
+
+
+
+
+
 
 
