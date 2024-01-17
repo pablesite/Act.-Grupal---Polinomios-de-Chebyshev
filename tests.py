@@ -18,7 +18,7 @@ step = (stop - start + 1)/nPoints;
 # Obtención de nodos
 # Array de valores de la x
 x = np.arange(start, stop + 1, step) 
-# Array de las imágenes de la función (f(x) = sin(x))
+
 my_sin_vec = np.vectorize(my_sin)
 my_func2_vec = np.vectorize(my_func2)
 #f = my_sin_vec(x)

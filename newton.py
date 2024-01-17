@@ -9,7 +9,7 @@ def my_func2(x):
 # Puntos de interpolación
 start = -5
 stop = 5
-nPoints = 11
+nPoints = 21
 x_values = np.linspace(start, stop, nPoints)
 y_values = my_func2(x_values)
 
