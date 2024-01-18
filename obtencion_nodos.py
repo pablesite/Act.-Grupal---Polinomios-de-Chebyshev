@@ -1,5 +1,3 @@
-
-
 """ Obtencion de nodos (11 y 21, equispaciados y de Chebysheb)"""
 
 import numpy as np

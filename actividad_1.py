@@ -1,14 +1,17 @@
 """ Codigo main para obtener los resultados de la Actividad 1"""
-
 import math
 import time
 from scipy import linalg
-import matplotlib.pyplot as plt
-
 import numpy as np
-from obtencion_nodos import obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
-from helpers import vectorize_functions, obtain_f_n
+import matplotlib.pyplot as plt
+# Algoritmos de interpolación
 
+from scipy.interpolate import lagrange
+
+
+from obtencion_nodos import obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
+from interpolacion import interp_bar, interp_lag, muestra_interpolacion
+from helpers import vectorize_functions, obtain_f_n
 
 
 """ Definicion de las funciones originales """
@@ -43,7 +46,7 @@ y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_eq_vec)):
     y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
 # Representacion de las graficas
-muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
+#muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
 
 ### Nodos de Chebyshev
 # Obtencion de las x (x_cheb_vec) para 11 y 21 puntos
@@ -53,59 +56,42 @@ y_n_cheb_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_cheb_vec)):
     y_n_cheb_points[i] = obtain_f_n(my_functions_vec, x_cheb_vec[i])
 # Representacion de la grafica
-muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
+#muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
 
 
 """ Algoritmos de interpolacion """
 
+### Barycentric
+
 # Con nodos equispaciados
-from scipy.interpolate import barycentric_interpolate
-
-x1 = np.linspace(min(x), max(x), num=100)
-
-y = barycentric_interpolate(x, f, x1)
-y_ref = my_sin_vec(x1)
-y_ref = my_func2_vec(x1)
-plt.plot(x, f, "o", label="observation")
-plt.plot(x1, y, label="barycentric interpolation")
-plt.plot(x1, y_ref, label="my_func2")
-plt.legend()
-plt.show()
+y_n_eq_bar = interp_bar(x_eq_vec, y_n_eq_points, x)
+muestra_interpolacion(x, f_n, y_n_eq_bar)
+    
+# Con nodos Chebyshev
+y_n_cheb_bar = interp_bar(x_cheb_vec, y_n_cheb_points, x)
+muestra_interpolacion(x, f_n, y_n_cheb_bar)
 
 
+### Lagrange
 
-y = barycentric_interpolate(xp_ch, f, x1)
-#y_ref = my_sin_vec(x1)
-y_ref = my_func2_vec(x1)
-plt.plot(xp_ch, f, "o", label="observation")
-plt.plot(x1, y, label="barycentric interpolation")
-plt.plot(x1, y_ref, label="my_func2")
-plt.legend()
-plt.show()
+# Con nodos equispaciados
+y_n_eq_lag = interp_lag(x_eq_vec, y_n_eq_points, x)
+muestra_interpolacion(x, f_n, y_n_eq_lag)
+    
+# Con nodos Chebyshev
+y_n_cheb_lag = interp_lag(x_cheb_vec, y_n_cheb_points, x)
+muestra_interpolacion(x, f_n, y_n_cheb_lag)
 
-
-#Lagrange
-
-#Lagrange
-from scipy.interpolate import lagrange
-
-# Lagrange Interpolation
-f = my_func2_vec(x)  # Funcion a utilizar
-y_ref = my_func2_vec(x1)
-
-# Calcular el polinomio interpolante de Lagrange
-polynomial = lagrange(x, f)
-
-# Evaluar el polinomio interpolante en los puntos x1
-y = polynomial(x1)
-
-plt.plot(x, f, "o", label="Observaciones")
-plt.plot(x1, y, label="Lagrange Interpolation")
-plt.plot(x1, y_ref, label="my_func2")
-plt.legend()
-plt.show()
-
-
+### Newton
+"""
+# Con nodos equispaciados
+y_n_eq_new = interp_lag(x_eq_vec, y_n_eq_points, x)
+muestra_interpolacion(x, f_n, y_n_eq_new)
+    
+# Con nodos Chebyshev
+y_n_cheb_new = interp_lag(x_cheb_vec, y_n_cheb_points, x)
+muestra_interpolacion(x, f_n, y_n_cheb_new)
+"""
 
 
 """ Calculo de errores """
