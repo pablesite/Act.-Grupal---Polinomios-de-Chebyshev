@@ -46,7 +46,7 @@ y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_eq_vec)):
     y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
 # Representacion de las graficas
-#muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
+muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
 
 ### Nodos de Chebyshev
 # Obtencion de las x (x_cheb_vec) para 11 y 21 puntos
@@ -56,7 +56,7 @@ y_n_cheb_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_cheb_vec)):
     y_n_cheb_points[i] = obtain_f_n(my_functions_vec, x_cheb_vec[i])
 # Representacion de la grafica
-#muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
+muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
 
 
 """ Algoritmos de interpolacion """

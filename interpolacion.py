@@ -13,8 +13,8 @@ def interp_bar(x_vec, y_n_points, x):
     return y_bar
 
 def interp_lag(x_vec, y_n_points, x):
-    """ Funcion que calcula el polinomio interpolador baricentrico """
-    y_bar = [[[0] * 100 for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    """ Funcion que calcula el polinomio interpolador de Lagrange """
+    y_lag = [[[0] * 100 for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
     for i in range(len(x_vec)):
         for j in range(len(y_n_points[0])):
             # Calcular el polinomio interpolante de Lagrange
