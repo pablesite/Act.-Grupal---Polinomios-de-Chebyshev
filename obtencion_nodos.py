@@ -4,8 +4,25 @@ import numpy as np
 import numpy.polynomial.chebyshev as cheb
 import matplotlib.pyplot as plt
 
+def vectorize_functions(functions):
+    my_functions_vec = [0] * len(functions)
+    i = 0
+    for function in functions:
+        my_functions_vec[i] = np.vectorize(function)
+        i = i + 1
+    return my_functions_vec
+
+def obtain_f_n (my_functions_vec, x):
+    """ Función que obtiene los valores de f(x) para una función dada """
+    f_n = [0] * len(my_functions_vec)
+    i = 0
+    for my_function_vec in my_functions_vec:
+        f_n[i] = my_function_vec(x)
+        i = i + 1
+    return f_n
+
 def obtencion_nodos_eq(start, stop, n_points_vec):
-    """ Funcion que obtiene los nodos equispaciados en un dominio dado para diferentes numero de puntos """
+    """ Funcion que obtiene los nodos equiespaciados en un dominio dado para diferentes numero de puntos """
     step_vec = [0] * len(n_points_vec)
     x_eq_vec = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
     i = 0

@@ -9,9 +9,8 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import lagrange
 
 
-from obtencion_nodos import obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
+from obtencion_nodos import vectorize_functions, obtain_f_n, obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
 from interpolacion import interp_bar, interp_lag, interp_new, muestra_interpolacion
-from helpers import vectorize_functions, obtain_f_n
 
 
 """ Definicion de las funciones originales """
