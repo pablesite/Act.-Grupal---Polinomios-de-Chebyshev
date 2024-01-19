@@ -29,12 +29,19 @@ def obtencion_nodos_cheb(start, stop, n_points_vec):
         i = i + 1
     return x_cheb_vec
 
-def muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points):
+def muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points, title):
     """ Funcion que muestra los plots de la obtencion de los nodos """
     fig, ax = plt.subplots(len(x_eq_vec), len(y_n_eq_points[0]))
+    fig.subplots_adjust(hspace=0.2, wspace=0.2)
+    fig.set_size_inches(16,10)
     for i in range(len(x_eq_vec)):
         for j in range(len(y_n_eq_points[0])):
             ax[i, j].plot(x_eq_vec[i], y_n_eq_points[i][j], "o")
-            ax[i, j].plot(x, f_n[j])   
-    plt.legend()
+            ax[i, j].plot(x, f_n[j])
+            ax[i, j].tick_params(labelsize=12)
+            if i == 0:
+                ax[i, j].set_title("Función " + str(j + 1) + ". Nodos: 11.", fontsize=12)
+            elif i == 1:
+                ax[i, j].set_title("Función " + str(j + 1) + ". Nodos: 21.", fontsize=12)
+    fig.suptitle(title, fontsize = 22)
     plt.show()

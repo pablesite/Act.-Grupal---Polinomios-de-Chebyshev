@@ -10,7 +10,7 @@ from scipy.interpolate import lagrange
 
 
 from obtencion_nodos import obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
-from interpolacion import interp_bar, interp_lag, muestra_interpolacion
+from interpolacion import interp_bar, interp_lag, interp_new, muestra_interpolacion
 from helpers import vectorize_functions, obtain_f_n
 
 
@@ -46,7 +46,7 @@ y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_eq_vec)):
     y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
 # Representacion de las graficas
-muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points)
+muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points, "Nodos Equispaciados")
 
 ### Nodos de Chebyshev
 # Obtencion de las x (x_cheb_vec) para 11 y 21 puntos
@@ -56,7 +56,7 @@ y_n_cheb_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
 for i in range(len(x_cheb_vec)):
     y_n_cheb_points[i] = obtain_f_n(my_functions_vec, x_cheb_vec[i])
 # Representacion de la grafica
-muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
+muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points, "Nodos de Chebyshev")
 
 
 """ Algoritmos de interpolacion """
@@ -65,32 +65,33 @@ muestra_nodos(x, f_n, x_cheb_vec, y_n_cheb_points)
 
 # Con nodos equispaciados
 y_n_eq_bar = interp_bar(x_eq_vec, y_n_eq_points, x)
-muestra_interpolacion(x, f_n, y_n_eq_bar)
+muestra_interpolacion(x, f_n, y_n_eq_bar,  "Barycentric")
     
 # Con nodos Chebyshev
 y_n_cheb_bar = interp_bar(x_cheb_vec, y_n_cheb_points, x)
-muestra_interpolacion(x, f_n, y_n_cheb_bar)
+muestra_interpolacion(x, f_n, y_n_cheb_bar, "Barycentric")
 
 
 ### Lagrange
 
 # Con nodos equispaciados
 y_n_eq_lag = interp_lag(x_eq_vec, y_n_eq_points, x)
-muestra_interpolacion(x, f_n, y_n_eq_lag)
+muestra_interpolacion(x, f_n, y_n_eq_lag, "Lagrange")
     
 # Con nodos Chebyshev
 y_n_cheb_lag = interp_lag(x_cheb_vec, y_n_cheb_points, x)
-muestra_interpolacion(x, f_n, y_n_cheb_lag)
+muestra_interpolacion(x, f_n, y_n_cheb_lag, "Lagrange")
 
-### Newton
 """
+### Newton
+
 # Con nodos equispaciados
-y_n_eq_new = interp_lag(x_eq_vec, y_n_eq_points, x)
+y_n_eq_new = interp_new(x_eq_vec, y_n_eq_points, x)
 muestra_interpolacion(x, f_n, y_n_eq_new)
     
 # Con nodos Chebyshev
-y_n_cheb_new = interp_lag(x_cheb_vec, y_n_cheb_points, x)
-muestra_interpolacion(x, f_n, y_n_cheb_new)
+y_n_cheb_new = interp_new(x_cheb_vec, y_n_cheb_points, x)
+muestra_interpolacion(x, f_n, y_n_cheb_new, )
 """
 
 
