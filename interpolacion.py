@@ -28,23 +28,35 @@ def newton_interpolation(x_values, y_values):
 def interp_bar(x_vec, y_n_points, x):
     """ Funcion que calcula el polinomio interpolador baricentrico para todos los casos de puntos e imagenes. """
     y_bar = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
-    p_b = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    tiempos = [[0] * len(y_n_points[0]) for i in range(len(x_vec))]
     for i in range(len(x_vec)):
         for j in range(len(y_n_points[0])):
+            inicio_tiempo = time.time()
+            
             y_bar[i][j] = barycentric_interpolate(x_vec[i], y_n_points[i][j], x)
-    return y_bar,p_b
+            
+            fin_tiempo = time.time()
+            tiempos[i][j] = fin_tiempo - inicio_tiempo
+            print(f"La interp baricéntrica tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
+    return y_bar, tiempos
 
 def interp_lag(x_vec, y_n_points, x):
     """ Funcion que calcula el polinomio interpolador de Lagrange para todos los casos de puntos e imagenes."""
     y_lag = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
-    p_l = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    tiempos = [[0] * len(y_n_points[0]) for i in range(len(x_vec))]
     for i in range(len(x_vec)):
         for j in range(len(y_n_points[0])):
+            inicio_tiempo = time.time()
+            
             # Calcular el polinomio interpolante de Lagrange
-            p_l[i][j] = lagrange(x_vec[i], y_n_points[i][j])
+            p_l = lagrange(x_vec[i], y_n_points[i][j])
             # Evaluar el polinomio interpolante en los puntos x1
-            y_lag[i][j] = p_l[i][j](x)
-    return y_lag, p_l
+            y_lag[i][j] = p_l(x)
+            
+            fin_tiempo = time.time()
+            tiempos[i][j] = fin_tiempo - inicio_tiempo
+            print(f"La interp de Lagrange tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
+    return y_lag, tiempos
 
 def interp_new(x_vec, y_n_points, x):
     """ Funcion que calcula el polinomio interpolador de Newton para todos los casos de puntos e imagenes."""
@@ -63,7 +75,7 @@ def interp_new(x_vec, y_n_points, x):
             
             fin_tiempo = time.time()
             tiempos[i][j] = fin_tiempo - inicio_tiempo
-            print(f"La interp de new tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
+            print(f"La interp de Newton tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
     return y_new, tiempos
 
 
