@@ -5,6 +5,7 @@ from scipy.interpolate import lagrange
 import sympy as sp
 
 import matplotlib.pyplot as plt
+import time
 
 
 def newton_interpolation(x_values, y_values):
@@ -26,35 +27,44 @@ def newton_interpolation(x_values, y_values):
 
 def interp_bar(x_vec, y_n_points, x):
     """ Funcion que calcula el polinomio interpolador baricentrico para todos los casos de puntos e imagenes. """
-    y_bar = [[[0] * 100 for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    y_bar = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    p_b = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
     for i in range(len(x_vec)):
         for j in range(len(y_n_points[0])):
             y_bar[i][j] = barycentric_interpolate(x_vec[i], y_n_points[i][j], x)
-    return y_bar
+    return y_bar,p_b
 
 def interp_lag(x_vec, y_n_points, x):
     """ Funcion que calcula el polinomio interpolador de Lagrange para todos los casos de puntos e imagenes."""
-    y_lag = [[[0] * 100 for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    y_lag = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    p_l = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
     for i in range(len(x_vec)):
         for j in range(len(y_n_points[0])):
             # Calcular el polinomio interpolante de Lagrange
-            p_l = lagrange(x_vec[i], y_n_points[i][j])
+            p_l[i][j] = lagrange(x_vec[i], y_n_points[i][j])
             # Evaluar el polinomio interpolante en los puntos x1
-            y_lag[i][j] = p_l(x)
-    return y_lag
+            y_lag[i][j] = p_l[i][j](x)
+    return y_lag, p_l
 
-def interp_new(x_vec, y_n_points, x1):
+def interp_new(x_vec, y_n_points, x):
     """ Funcion que calcula el polinomio interpolador de Newton para todos los casos de puntos e imagenes."""
-    y_new = [[[0] * 100 for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    y_new = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    tiempos = [[0] * len(y_n_points[0]) for i in range(len(x_vec))]
     for i in range(len(x_vec)):
-        for j in range(len(y_n_points[0])):          
+        for j in range(len(y_n_points[0])):  
+            inicio_tiempo = time.time()
+            
             # Construir el polinomio interpolante
             p_new = newton_interpolation(x_vec[i], y_n_points[i][j])
             # Crear una función lambda a partir del polinomio
             interp_func = sp.lambdify('x', p_new, 'numpy')
             #Evaluar
-            y_new[i][j] = interp_func(x1)
-    return y_new
+            y_new[i][j] = interp_func(x)
+            
+            fin_tiempo = time.time()
+            tiempos[i][j] = fin_tiempo - inicio_tiempo
+            print(f"La interp de new tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
+    return y_new, tiempos
 
 
 def muestra_interpolacion(x, f_n, y_n, title):
@@ -64,8 +74,8 @@ def muestra_interpolacion(x, f_n, y_n, title):
     fig.set_size_inches(16,10)
     for i in range(len(y_n)):
         for j in range(len(y_n[0])):
-            ax[i, j].plot(x, y_n[i][j])
             ax[i, j].plot(x, f_n[j]) 
+            ax[i, j].plot(x, y_n[i][j])
             ax[i, j].tick_params(labelsize=12)
             if i == 0:
                 ax[i, j].set_title("Función " + str(j + 1) + ". Nodos: 11.", fontsize=12)

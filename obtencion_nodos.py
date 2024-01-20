@@ -53,8 +53,8 @@ def muestra_nodos(x, f_n, x_eq_vec, y_n_eq_points, title):
     fig.set_size_inches(16,10)
     for i in range(len(x_eq_vec)):
         for j in range(len(y_n_eq_points[0])):
-            ax[i, j].plot(x_eq_vec[i], y_n_eq_points[i][j], "o")
             ax[i, j].plot(x, f_n[j])
+            ax[i, j].plot(x_eq_vec[i], y_n_eq_points[i][j], "o")  
             ax[i, j].tick_params(labelsize=12)
             if i == 0:
                 ax[i, j].set_title("Función " + str(j + 1) + ". Nodos: 11.", fontsize=12)
