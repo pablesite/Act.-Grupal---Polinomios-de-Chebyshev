@@ -4,10 +4,7 @@ import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 import time
-from scipy.interpolate import barycentric_interpolate
-from scipy.interpolate import lagrange
-
-
+from scipy.interpolate import barycentric_interpolate, lagrange, InterpolatedUnivariateSpline
 
 
 def newton_interpolation(x_values, y_values):
@@ -79,6 +76,26 @@ def interp_new(x_vec, y_n_points, x):
             tiempos[i][j] = fin_tiempo - inicio_tiempo
             print(f"La interp de Newton tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
     return y_new, tiempos
+
+
+def interp_spl(x_vec, y_n_points, x):
+    """ Funcion que calcula el polinomio interpolador con Splines para todos los casos de puntos e imagenes."""
+    y_spl = [[[0] * len(x) for i in range(len(y_n_points[0]))] for j in range(len(x_vec))]
+    tiempos = [[0] * len(y_n_points[0]) for i in range(len(x_vec))]
+    for i in range(len(x_vec)):
+        for j in range(len(y_n_points[0])):  
+            inicio_tiempo = time.time()
+            
+            # Construir el polinomio interpolante con splines
+            p_spl = InterpolatedUnivariateSpline(x_vec[i], y_n_points[i][j])
+            #Evaluar
+            y_spl[i][j] = p_spl(x)
+            
+            fin_tiempo = time.time()
+            tiempos[i][j] = fin_tiempo - inicio_tiempo
+            print(f"La interp con Splines tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
+    return y_spl, tiempos
+
 
 def error(pol, f):
     """ Funcion que calcula el error para los polinomios pasados con respecto a las funciones de referencia."""
