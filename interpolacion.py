@@ -1,11 +1,13 @@
 """ Algoritmos de interpolación """
 
-from scipy.interpolate import barycentric_interpolate
-from scipy.interpolate import lagrange
+import numpy as np
 import sympy as sp
-
 import matplotlib.pyplot as plt
 import time
+from scipy.interpolate import barycentric_interpolate
+from scipy.interpolate import lagrange
+
+
 
 
 def newton_interpolation(x_values, y_values):
@@ -78,6 +80,18 @@ def interp_new(x_vec, y_n_points, x):
             print(f"La interp de Newton tardó {tiempos[i][j]:.2f} segundos en ejecutarse.")
     return y_new, tiempos
 
+def error(pol, f):
+    """ Funcion que calcula el error para los polinomios pasados con respecto a las funciones de referencia."""
+    error_abs = [[0] * len(pol[0]) for i in range(len(pol))]
+    for i in range(len(pol)):
+        for j in range(len(pol[0])):
+      
+            # Calculo del error
+            error = pol[i][j] - f[j]
+            # MAE (Error absoluto medio)
+            error_abs[i][j] = np.linalg.norm(error, ord=1) / len(f[j])
+
+    return error_abs
 
 def muestra_interpolacion(x, f_n, y_n, title):
     """ Funcion que muestra los plots de la obtencion de los nodos """
