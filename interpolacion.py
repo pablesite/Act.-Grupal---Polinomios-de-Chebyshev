@@ -13,13 +13,13 @@ def newton_interpolation(x_values, y_values):
     x = sp.symbols('x')
     f = [y_values[i] for i in range(n)]
 
-    for j in range(1, n):
-        for i in range(n - 1, j - 1, -1):
-            f[i] = (f[i] - f[i - 1]) / (x_values[i]-x_values[i - j])
+    for i in range(1, n):
+        for j in range(n - 1, i - 1, -1):
+            f[j] = (f[j] - f[j - 1]) / (x_values[j]-x_values[j - i])
 
     polynomial = f[-1]
-    for i in range(n - 2, -1, -1):
-        polynomial = polynomial * (x-x_values[i])+f[i]
+    for k in range(n - 2, -1, -1):
+        polynomial = polynomial * (x-x_values[k])+f[k]
 
     return sp.simplify(polynomial)
 
@@ -117,6 +117,7 @@ def muestra_interpolacion(x, f_n, y_n, title):
     fig.set_size_inches(16,10)
     for i in range(len(y_n)):
         for j in range(len(y_n[0])):
+            
             ax[i, j].plot(x, f_n[j]) 
             ax[i, j].plot(x, y_n[i][j])
             ax[i, j].tick_params(labelsize=12)

@@ -1,13 +1,6 @@
 """ Codigo main para obtener los resultados de la Actividad 1"""
 import math
-import time
-from scipy import linalg
 import numpy as np
-import matplotlib.pyplot as plt
-# Algoritmos de interpolación
-
-from scipy.interpolate import lagrange
-
 
 from obtencion_nodos import vectorize_functions, obtain_f_n, obtencion_nodos_eq, obtencion_nodos_cheb, muestra_nodos
 from interpolacion import interp_bar, interp_lag, interp_new, interp_spl, error, muestra_interpolacion
@@ -26,7 +19,7 @@ def my_func3(x):
 # Inicializacion de variables
 start = -5
 stop = 5
-n_points_vec = (11,21) # Dinamico
+n_points_vec = (11, 13) # Dinamico
 # Obtencion del vector x, con alto muestreo para ver la funcion original.
 x = np.linspace(start, stop, num=1000)
 # Obtencion de las f(x) de cada una de las funciones. 
