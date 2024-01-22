@@ -16,14 +16,22 @@ def my_func2(x):
 def my_func3(x):
     return math.exp(-20*x**2)
 
-# Inicializacion de variables
-start = -5
-stop = 5
-n_points_vec = (11, 13) # Dinamico
+### Inicializacion de variables.
+
+# 1 intervalo [start, stop] para cada función.
+start = [-np.pi, -4, -1]
+stop  = [ np.pi,  4,  1]
+
+# Se pueden indicar tantos números de nodos como se quiera.
+n_points_vec = (11, 21) 
+
 # Obtencion del vector x, con alto muestreo para ver la funcion original.
-x = np.linspace(start, stop, num=1000)
+x = [0] * len(start)
+for i in range(len(start)):
+    x[i] = np.linspace(start[i], stop[i], num=1000)
+
 # Obtencion de las f(x) de cada una de las funciones. 
-my_functions_vec = vectorize_functions((my_func1, my_func2, my_func3)) # Dinamico
+my_functions_vec = vectorize_functions((my_func1, my_func2, my_func3))
 f_n = obtain_f_n(my_functions_vec, x)
 
 
@@ -33,6 +41,9 @@ f_n = obtain_f_n(my_functions_vec, x)
 x_eq_vec = obtencion_nodos_eq(start, stop, n_points_vec)
 # Valores de las imagenes (f(x)) de las 3 funciones para 11 y 21 puntos
 y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
+#y_n_eq_points = [[[0] * len(x[0]) for i in range(len(f_n))] for j in range(len(n_points_vec))]
+
+
 for i in range(len(x_eq_vec)):
     y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
 # Representacion de las graficas

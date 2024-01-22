@@ -58,32 +58,32 @@ figura, graficas=plt.subplots(2,3, constrained_layout = True)
     
 graficas[0, 0].plot(x11, y11_1, 'o')
 graficas[0, 0].plot(x, y_1, label='true')
-graficas[0, 0].plot(x11, sp11_1(x11))
+graficas[0, 0].plot(x, sp11_1(x))
 graficas[0, 0].set_title('Función 1. Nodos: 11')
 
 graficas[1,0].plot(x21, y21_1, 'o')
 graficas[1,0].plot(x, y_1, label='true')
-graficas[1,0].plot(x21, sp21_1(x21))
+graficas[1,0].plot(x, sp21_1(x))
 graficas[1,0].set_title('Función 1. Nodos: 21')
 
 graficas[0, 1].plot(x11, y11_2, 'o')
 graficas[0, 1].plot(x, y_2, label='true')
-graficas[0, 1].plot(x11, sp11_2(x11))
+graficas[0, 1].plot(x, sp11_2(x))
 graficas[0, 1].set_title('Función 2. Nodos: 11')
 
 graficas[1,1].plot(x21, y21_2, 'o')
 graficas[1,1].plot(x, y_2, label='true')
-graficas[1,1].plot(x21, sp21_2(x21))
+graficas[1,1].plot(x, sp21_2(x))
 graficas[1,1].set_title('Función 2. Nodos: 21')
 
 graficas[0, 2].plot(x11, y11_3, 'o')
 graficas[0, 2].plot(x, y_3, label='true')
-graficas[0, 2].plot(x11, sp11_3(x11))
+graficas[0, 2].plot(x, sp11_3(x))
 graficas[0, 2].set_title('Función 3. Nodos: 11')
 
 graficas[1,2].plot(x21, y21_3, 'o')
 graficas[1,2].plot(x, y_3, label='true')
-graficas[1,2].plot(x21, sp21_3(x21))
+graficas[1,2].plot(x, sp21_3(x))
 graficas[1,2].set_title('Función 2. Nodos: 21')
 
 

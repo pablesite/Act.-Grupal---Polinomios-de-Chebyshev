@@ -32,7 +32,7 @@ def interp_bar(x_vec, y_n_points, x):
         for j in range(len(y_n_points[0])):
             inicio_tiempo = time.time()
             
-            y_bar[i][j] = barycentric_interpolate(x_vec[i], y_n_points[i][j], x)
+            y_bar[i][j] = barycentric_interpolate(x_vec[i][j], y_n_points[i][j], x[j])
             
             fin_tiempo = time.time()
             tiempos[i][j] = fin_tiempo - inicio_tiempo
@@ -48,9 +48,9 @@ def interp_lag(x_vec, y_n_points, x):
             inicio_tiempo = time.time()
             
             # Calcular el polinomio interpolante de Lagrange
-            p_l = lagrange(x_vec[i], y_n_points[i][j])
+            p_l = lagrange(x_vec[i][j], y_n_points[i][j])
             # Evaluar el polinomio interpolante en los puntos x1
-            y_lag[i][j] = p_l(x)
+            y_lag[i][j] = p_l(x[j])
             
             fin_tiempo = time.time()
             tiempos[i][j] = fin_tiempo - inicio_tiempo
@@ -66,11 +66,11 @@ def interp_new(x_vec, y_n_points, x):
             inicio_tiempo = time.time()
             
             # Construir el polinomio interpolante
-            p_new = newton_interpolation(x_vec[i], y_n_points[i][j])
+            p_new = newton_interpolation(x_vec[i][j], y_n_points[i][j])
             # Crear una función lambda a partir del polinomio
             interp_func = sp.lambdify('x', p_new, 'numpy')
             #Evaluar
-            y_new[i][j] = interp_func(x)
+            y_new[i][j] = interp_func(x[j])
             
             fin_tiempo = time.time()
             tiempos[i][j] = fin_tiempo - inicio_tiempo
@@ -87,9 +87,9 @@ def interp_spl(x_vec, y_n_points, x):
             inicio_tiempo = time.time()
             
             # Construir el polinomio interpolante con splines
-            p_spl = InterpolatedUnivariateSpline(x_vec[i], y_n_points[i][j])
+            p_spl = InterpolatedUnivariateSpline(x_vec[i][j], y_n_points[i][j])
             #Evaluar
-            y_spl[i][j] = p_spl(x)
+            y_spl[i][j] = p_spl(x[j])
             
             fin_tiempo = time.time()
             tiempos[i][j] = fin_tiempo - inicio_tiempo
@@ -118,8 +118,8 @@ def muestra_interpolacion(x, f_n, y_n, title):
     for i in range(len(y_n)):
         for j in range(len(y_n[0])):
             
-            ax[i, j].plot(x, f_n[j]) 
-            ax[i, j].plot(x, y_n[i][j])
+            ax[i, j].plot(x[j], f_n[j]) 
+            ax[i, j].plot(x[j], y_n[i][j])
             ax[i, j].tick_params(labelsize=12)
             if i == 0:
                 ax[i, j].set_title("Función " + str(j + 1) + ". Nodos: 11.", fontsize=12)
