@@ -39,11 +39,9 @@ f_n = obtain_f_n(my_functions_vec, x)
 ### Nodos equispaciados
 # Obtencion de las x (x_eq_vec) para 11 y 21 puntos
 x_eq_vec = obtencion_nodos_eq(start, stop, n_points_vec)
+
 # Valores de las imagenes (f(x)) de las 3 funciones para 11 y 21 puntos
 y_n_eq_points = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
-#y_n_eq_points = [[[0] * len(x[0]) for i in range(len(f_n))] for j in range(len(n_points_vec))]
-
-
 for i in range(len(x_eq_vec)):
     y_n_eq_points[i] = obtain_f_n(my_functions_vec, x_eq_vec[i])
 # Representacion de las graficas

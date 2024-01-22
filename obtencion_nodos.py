@@ -13,7 +13,7 @@ def vectorize_functions(functions):
     return my_functions_vec
 
 def obtain_f_n (my_functions_vec, x):
-    """ Función que obtiene los valores de f(x) para una función dada """
+    """ Funcion que obtiene los valores de f(x) para una funcion dada """
     f_n = [0] * len(my_functions_vec)
     i = 0
     for my_function_vec in my_functions_vec:
@@ -37,7 +37,6 @@ def obtencion_nodos_eq(start, stop, n_points_vec):
 def obtencion_nodos_cheb(start, stop, n_points_vec):
     """ Funcion que obtiene los nodos de Chebysehev en un dominio dado para diferentes numero de puntos """
     coeffs_cheb = [0] * len(n_points_vec)
-    #T_n = [[0] * n_points_vec[i] for i in range(len(n_points_vec))]
     T_n = [[[0] * n_points_vec[i] for j in range(len(start))] for i in range(len(n_points_vec))]
     x_cheb_vec = [[[0] * n_points_vec[i] for j in range(len(start))] for i in range(len(n_points_vec))]
     i = 0
